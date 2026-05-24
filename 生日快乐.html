@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>生日贺卡</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            background: linear-gradient(145deg, #a0c4ff 0%, #c7b9ff 35%, #fbc2eb 70%, #ffd6e0 100%);
+        }
+
+        .scroll-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .scroll-container::-webkit-scrollbar { display: none; }
+
+        .page {
+            scroll-snap-align: start;
+            width: 100%;
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: rgba(245, 240, 255, 0.2);
+            backdrop-filter: blur(3px);
+            z-index: 2;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .title-container { max-width: 90%; animation: fadeInUp 0.8s ease; position: relative; }
+
+        .main-title {
+            font-size: 4rem;
+            font-weight: 800;
+            font-family: 'Great Vibes', 'Dancing Script', cursive;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            word-break: break-word;
+            max-width: 90vw;
+            -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.6);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 230, 100, 0.9) 2px, transparent 2px),
+                radial-gradient(circle at 20% 45%, rgba(255, 240, 120, 0.8) 2px, transparent 2px),
+                radial-gradient(circle at 30% 70%, rgba(255, 230, 100, 0.9) 2px, transparent 2px),
+                radial-gradient(circle at 40% 15%, rgba(255, 240, 120, 0.8) 2px, transparent 2px),
+                radial-gradient(circle at 50% 85%, rgba(255, 230, 100, 0.9) 2px, transparent 2px),
+                radial-gradient(circle at 60% 35%, rgba(255, 240, 120, 0.8) 2px, transparent 2px),
+                radial-gradient(circle at 70% 55%, rgba(255, 230, 100, 0.9) 2px, transparent 2px),
+                radial-gradient(circle at 80% 25%, rgba(255, 240, 120, 0.8) 2px, transparent 2px),
+                radial-gradient(circle at 90% 75%, rgba(255, 230, 100, 0.9) 2px, transparent 2px),
+                radial-gradient(circle at 15% 90%, rgba(255, 240, 120, 0.8) 2px, transparent 2px),
+                radial-gradient(circle at 45% 10%, rgba(255, 230, 100, 0.9) 2px, transparent 2px),
+                radial-gradient(circle at 75% 50%, rgba(255, 240, 120, 0.8) 2px, transparent 2px),
+                radial-gradient(circle at 25% 30%, rgba(255, 230, 100, 0.9) 2px, transparent 2px),
+                radial-gradient(circle at 65% 80%, rgba(255, 240, 120, 0.8) 2px, transparent 2px),
+                radial-gradient(circle at 35% 95%, rgba(255, 230, 100, 0.9) 2px, transparent 2px),
+                linear-gradient(135deg, #1e3af2, #d946ef, #3b82f6, #f0a3ff);
+            background-size: 180px 180px, 200px 200px, 220px 220px, 190px 190px, 210px 210px, 230px 230px, 170px 170px, 240px 240px, 200px 200px, 260px 260px, 180px 180px, 250px 250px, 210px 210px, 220px 220px, 190px 190px, 200% 200%;
+            background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, no-repeat;
+            background-position: 0% 0%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: starDrift 60s linear infinite, gradientFlow 8s ease infinite alternate;
+        }
+
+        @keyframes starDrift {
+            0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+            100% { background-position: 20% 0%, 30% 0%, 25% 0%, 35% 0%, 15% 0%, 40% 0%, 10% 0%, 45% 0%, 28% 0%, 50% 0%, 32% 0%, 18% 0%, 38% 0%, 22% 0%, 48% 0%, 100% 100%; }
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+            100% { background-position: 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 100%; }
+        }
+
+        .sub-title {
+            font-size: 1.2rem;
+            color: #2c3e66;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            font-family: 'Great Vibes', 'Dancing Script', cursive;
+        }
+
+        .arrow-hint {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            animation: bounceArrow 1.5s ease-in-out infinite;
+            cursor: pointer;
+            padding: 0 30px;
+            letter-spacing: 8px;
+        }
+
+        .permanent-arrow {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            animation: bounceArrow 1.5s ease-in-out infinite;
+            padding: 0 30px;
+            letter-spacing: 8px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .permanent-arrow.show {
+            opacity: 1;
+        }
+
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); opacity: 0.6; }
+            50% { transform: translateY(12px); opacity: 1; }
+        }
+
+        /* 蛋糕组件 */
+        .cake-illustration {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+        }
+        .cake-stack {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            position: relative;
+            width: 100%;
+        }
+        .cake-layer {
+            border-radius: 20px;
+            box-shadow: 0 8px 14px rgba(0,0,0,0.15);
+            position: relative;
+            margin: -2px 0;
+        }
+        .layer-bottom { background: #e7a17a; height: 75px; width: 250px; border-radius: 28px 28px 32px 32px; border-bottom: 6px solid #cb7e53; z-index: 1; }
+        .layer-middle { background: #f3bc8c; height: 62px; width: 210px; border-radius: 24px 24px 28px 28px; border-bottom: 5px solid #e2a06e; z-index: 2; }
+        .layer-top { background: #ffcf9a; height: 52px; width: 170px; border-radius: 20px 20px 24px 24px; border-bottom: 5px solid #fbb47a; z-index: 3; }
+        .cream {
+            position: absolute;
+            top: -12px;
+            left: 10px;
+            right: 10px;
+            height: 18px;
+            background: #fff6e0;
+            border-radius: 30px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        .cake-layer .cream { width: calc(100% - 20px); left: 10px; }
+
+        .candle-wrapper {
+            position: relative;
+            z-index: 10;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: center;
+        }
+        .candle {
+            width: 24px; height: 60px;
+            background: linear-gradient(135deg, #f9a8d4, #ff85b3);
+            border-radius: 14px 14px 4px 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.1s;
+            position: relative;
+            touch-action: manipulation;
+            z-index: 20;
+        }
+        .candle-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 70px;
+            height: 70px;
+            margin-left: -35px;
+            margin-top: -35px;
+            border-radius: 50%;
+            background: rgba(255, 215, 150, 0.4);
+            backdrop-filter: blur(2px);
+            pointer-events: none;
+            z-index: 15;
+            animation: breathe 1.5s ease-in-out infinite;
+        }
+        @keyframes breathe {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+            100% { transform: scale(0.8); opacity: 0.3; }
+        }
+        .flame {
+            position: absolute; top: -24px; left: 6px; width: 12px; height: 26px;
+            background: radial-gradient(circle, #ffb347, #ff6f31);
+            border-radius: 50% 50% 30% 30%;
+            animation: flicker 0.3s infinite alternate;
+            box-shadow: 0 0 10px #ffb347;
+            pointer-events: none;
+        }
+        @keyframes flicker {
+            0% { transform: scale(1) translateY(0); opacity: 0.9; width: 11px; height: 23px; }
+            100% { transform: scale(1.1) translateY(-3px); opacity: 1; width: 14px; height: 28px; }
+        }
+
+        /* 提示文字：蜡烛正上方，绝对定位在 candle-wrapper 内部 */
+        .candle-tip {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 80px;          /* 调整数值使提示显示在蜡烛火焰上方 */
+            font-family: "PingFang SC", "Apple SD Gothic Neo", system-ui, -apple-system;
+            font-size: 1rem;
+            font-weight: 500;
+            color: white;
+            text-shadow: 0 0 4px rgba(0,0,0,0.3);
+            white-space: nowrap;
+            background: none;
+            padding: 4px 12px;
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 25;
+            opacity: 1;
+            /* 轻微闪烁效果，但不会消失 */
+            animation: gentleBlink 1.5s ease-in-out infinite;
+        }
+        @keyframes gentleBlink {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        /* 蜡烛熄灭后隐藏提示 */
+        .candle-tip.hide {
+            display: none;
+        }
+
+        /* 第三页祝福排版 */
+        .blessing-container {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+        .blessing-text {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #2d3e50;
+            font-weight: 500;
+            white-space: normal;
+            word-break: break-word;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        .blessing-line {
+            margin: 0.8rem 0;
+        }
+        .blessing-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d946ef, #3b82f6, transparent);
+            margin: 1.2rem auto;
+            border-radius: 2px;
+        }
+        .blessing-highlight {
+            font-weight: 600;
+            background: linear-gradient(135deg, #1e3af2, #d946ef, #3b82f6, #f0a3ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .personal-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            font-family: 'Great Vibes', 'Dancing Script', cursive;
+            background: linear-gradient(135deg, #1e3af2, #d946ef, #3b82f6, #f0a3ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0.5rem 0;
+            display: inline-block;
+            -webkit-text-stroke: 0.5px rgba(255,255,255,0.5);
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .firework-btn {
+            background: linear-gradient(135deg, #3b82f6, #d946ef);
+            border: none; padding: 14px 32px; font-size: 1.2rem; font-weight: bold;
+            color: white; border-radius: 80px; cursor: pointer; box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+            transition: 0.2s; margin-top: 20px; margin-bottom: 16px;
+        }
+        .firework-btn:active { transform: scale(0.96); }
+        .signature-date { font-size: 0.8rem; color: #6b4e3a; margin-top: 20px; opacity: 0.8; }
+
+        /* 页面指示点 */
+        .page-dots {
+            position: fixed; right: 12px; top: 50%; transform: translateY(-50%);
+            z-index: 30; display: flex; flex-direction: column; gap: 14px;
+            background: rgba(0,0,0,0.25); backdrop-filter: blur(4px); padding: 8px 6px; border-radius: 40px;
+        }
+        .dot { width: 8px; height: 8px; background: rgba(255,255,210,0.8); border-radius: 50%; transition: all 0.2s; cursor: pointer; }
+        .dot.active { background: #ffffff; width: 16px; box-shadow: 0 0 8px #ffb8c6; border-radius: 8px; }
+
+        /* 气球背景 */
+        .balloon-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; overflow: hidden; }
+        .balloon {
+            position: absolute; bottom: -120px; width: 55px; height: 65px;
+            background: radial-gradient(circle at 30% 30%, rgba(255,220,180,0.6), rgba(255,120,120,0.5));
+            border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); opacity: 0.5;
+            animation: floatUp 14s ease-in-out infinite; will-change: transform;
+        }
+        .balloon::before {
+            content: ""; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 8px solid rgba(184, 115, 74, 0.7);
+        }
+        .balloon::after {
+            content: ""; position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%);
+            width: 1px; height: 60px; background: white; opacity: 0.7;
+        }
+        .balloon .highlight {
+            position: absolute; top: 15%; left: 20%; width: 20%; height: 20%;
+            background: radial-gradient(circle, rgba(255,255,245,0.4), rgba(255,255,245,0)); border-radius: 50%;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-300px) translateX(15px) rotate(4deg); opacity: 0.7; }
+            100% { transform: translateY(-1000px) translateX(-12px) rotate(-4deg); opacity: 0; }
+        }
+
+        /* 音乐控制 */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            font-size: 32px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: none;
+            color: #2c3e66;
+            transition: transform 0.2s;
+            display: inline-block;
+            width: auto;
+            height: auto;
+            line-height: 1;
+            font-family: monospace;
+        }
+        .music-control:active { transform: scale(0.95); }
+        .music-control.muted::after {
+            content: "/";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(25deg);
+            font-size: 42px;
+            font-weight: bold;
+            color: #e74c3c;
+            pointer-events: none;
+        }
+
+        /* 成功弹窗 */
+        .custom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.2s, opacity 0.2s;
+        }
+        .custom-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, rgba(255,255,245,0.95), rgba(255,240,245,0.95));
+            border-radius: 32px;
+            padding: 1.5rem 2rem;
+            max-width: 80%;
+            text-align: center;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,215,180,0.8);
+            animation: modalPop 0.3s ease;
+        }
+        @keyframes modalPop {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-content p {
+            font-size: 1.3rem;
+            color: #d946ef;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            font-family: inherit;
+        }
+
+        /* 烟花画布 */
+        #fireworkCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2000;
+        }
+
+        @media (max-width: 550px) {
+            .main-title { font-size: 2.8rem; letter-spacing: 2px; }
+            .layer-bottom { width: 200px; height: 60px; }
+            .layer-middle { width: 170px; height: 50px; }
+            .layer-top { width: 140px; height: 42px; }
+            .candle { height: 50px; width: 20px; }
+            .flame { top: -20px; left: 4px; width: 10px; height: 22px; }
+            .personal-name { font-size: 1.9rem; }
+            .blessing-text { font-size: 1rem; line-height: 1.6; }
+            .blessing-divider { margin: 0.8rem auto; }
+            .candle-tip { font-size: 0.8rem; bottom: 60px; white-space: nowrap; }
+            .balloon { width: 40px; height: 48px; }
+            .balloon::before { border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 6px solid rgba(184, 115, 74, 0.7); bottom: -6px; }
+            .balloon::after { bottom: -48px; height: 48px; width: 0.8px; }
+            .music-control { font-size: 28px; top: 12px; right: 12px; }
+            .modal-content p { font-size: 1.1rem; }
+            .arrow-hint, .permanent-arrow { font-size: 1.5rem; letter-spacing: 6px; padding: 0 20px; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 成功弹窗 -->
+<div id="customModal" class="custom-modal">
+    <div class="modal-content">
+        <p id="modalMessage">许愿成功，愿你一切美好的梦想皆能实现！</p>
+    </div>
+</div>
+
+<!-- 音乐控制 -->
+<div class="music-control" id="musicControl">♪</div>
+<div class="balloon-bg" id="balloonContainer"></div>
+
+<!-- 烟花画布 -->
+<canvas id="fireworkCanvas"></canvas>
+
+<div class="scroll-container" id="scrollContainer">
+    <section class="page" id="page1">
+        <div class="title-container">
+            <div class="main-title" id="mainTitle">Dear Dream, Happy Birthday!</div>
+            <div class="sub-title" id="subTitle">A special day for a special you</div>
+            <div class="arrow-hint">↓</div>
+        </div>
+    </section>
+
+    <section class="page" id="page2">
+        <div class="cake-illustration">
+            <div class="candle-wrapper">
+                <div class="candle" id="candleAnim">
+                    <div class="flame" id="flame"></div>
+                </div>
+                <div class="candle-hint" id="candleHint"></div>
+                <!-- 提示文字放在蜡烛容器内部，相对于蜡烛定位 -->
+                <div id="candleTip" class="candle-tip">轻触蜡烛许愿</div>
+            </div>
+            <div class="cake-stack">
+                <div class="cake-layer layer-bottom"><div class="cream"></div></div>
+                <div class="cake-layer layer-middle"><div class="cream"></div></div>
+                <div class="cake-layer layer-top"><div class="cream"></div></div>
+            </div>
+            <div class="permanent-arrow" id="permanentArrow">↓</div>
+        </div>
+    </section>
+
+    <section class="page" id="page3">
+        <div class="blessing-container">
+            <div class="personal-name" id="dynamicName">Dear Dream</div>
+            <div class="blessing-text">
+                <div class="blessing-line">愿你的每一天都充满阳光与温暖</div>
+                <div class="blessing-line">健康、快乐、幸运永伴你左右</div>
+                <div class="blessing-divider"></div>
+                <div class="blessing-line">也愿你的生活轻盈自在，</div>
+                <div class="blessing-line">像风一样自由，像云一样舒展</div>
+                <div class="blessing-divider"></div>
+                <div class="blessing-line blessing-highlight">轻松快乐 · 不止今天</div>
+            </div>
+            <button class="firework-btn" id="fireworkBtn">绽放烟花祝福</button>
+            <div class="signature-date">
+                永远祝福你的人<br>
+                <span id="todayDate"></span>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="page-dots" id="pageDots">
+    <div class="dot" data-index="0"></div>
+    <div class="dot" data-index="1"></div>
+    <div class="dot" data-index="2"></div>
+</div>
+
+<script>
+    // ==================== 音乐配置 ====================
+    const musicUrl = "https://cdn.jsdelivr.net/gh/lztian233/markdownpic@main/%E7%94%9F%E6%97%A5%E7%A5%9D%E7%A6%8F%E6%AD%8C.mp3";
+    const bgm = new Audio(musicUrl);
+    bgm.loop = true;
+    bgm.volume = 0.6;
+    let musicPlaying = false;
+    let userInteracted = false;
+    let isMuted = false;
+
+    function tryPlayMusic() {
+        if (musicPlaying) return;
+        bgm.play().then(() => {
+            musicPlaying = true;
+            const ctrl = document.getElementById('musicControl');
+            ctrl.innerText = '♪';
+            ctrl.classList.remove('muted');
+            isMuted = false;
+        }).catch(e => {
+            console.warn("自动播放被阻止，需要用户交互", e);
+        });
+    }
+
+    function toggleMute() {
+        if (!musicPlaying) {
+            tryPlayMusic();
+            return;
+        }
+        if (!bgm.muted) {
+            bgm.muted = true;
+            document.getElementById('musicControl').classList.add('muted');
+            isMuted = true;
+        } else {
+            bgm.muted = false;
+            document.getElementById('musicControl').classList.remove('muted');
+            isMuted = false;
+        }
+    }
+
+    function onFirstInteraction() {
+        if (userInteracted) return;
+        userInteracted = true;
+        tryPlayMusic();
+        document.removeEventListener('click', onFirstInteraction);
+        document.removeEventListener('touchstart', onFirstInteraction);
+    }
+    document.addEventListener('click', onFirstInteraction);
+    document.addEventListener('touchstart', onFirstInteraction);
+
+    const musicControl = document.getElementById('musicControl');
+    musicControl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMute();
+    });
+
+    window.addEventListener('load', () => {
+        bgm.play().then(() => {
+            musicPlaying = true;
+            const ctrl = document.getElementById('musicControl');
+            ctrl.innerText = '♪';
+            ctrl.classList.remove('muted');
+        }).catch(() => {});
+    });
+
+    // ==================== 蜡烛提示：绑定蜡烛状态，点燃时显示，熄灭后永久隐藏 ====================
+    const candleTip = document.getElementById('candleTip');
+    const flameElement = document.getElementById('flame');
+    // 初始状态：蜡烛是点燃的，确保提示显示（无 hide 类）
+    if (candleTip) candleTip.classList.remove('hide');
+
+    // ==================== 成功弹窗 ====================
+    const modal = document.getElementById('customModal');
+    const modalMessage = document.getElementById('modalMessage');
+    let modalTimer = null;
+    function showModal(text) {
+        if (modalTimer) clearTimeout(modalTimer);
+        if (text) modalMessage.innerText = text;
+        modal.classList.add('active');
+        modalTimer = setTimeout(() => {
+            modal.classList.remove('active');
+            modalTimer = null;
+        }, 3000);
+    }
+
+    // ==================== 配置名称 ====================
+    const CONFIG = {
+        defaultName: 'Dream',
+        titleFontFamily: "'Great Vibes', 'Dancing Script', cursive",
+        subTitleText: "A special day for a special you",
+        subTitleColor: "#2c3e66",
+    };
+    function getUrlParameter(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+    }
+    let guestName = getUrlParameter('name');
+    if (!guestName || guestName.trim() === '') guestName = CONFIG.defaultName;
+    else try { guestName = decodeURIComponent(guestName); if (guestName.length > 20) guestName = guestName.slice(0,18); } catch(e) {}
+
+    const mainTitleEl = document.getElementById('mainTitle');
+    if (mainTitleEl) {
+        mainTitleEl.innerText = `Dear ${guestName}, Happy Birthday!`;
+        mainTitleEl.style.fontFamily = CONFIG.titleFontFamily;
+    }
+    const subTitleEl = document.getElementById('subTitle');
+    if (subTitleEl) { subTitleEl.innerText = CONFIG.subTitleText; subTitleEl.style.color = CONFIG.subTitleColor; }
+    const nameSpan = document.getElementById('dynamicName');
+    if (nameSpan) nameSpan.innerText = `Dear Dream`;
+    const blessingDiv = document.querySelector('.blessing-text');
+    if (blessingDiv && guestName !== 'Dream') {
+        const originalHTML = blessingDiv.innerHTML;
+        blessingDiv.innerHTML = `<div class="blessing-line">致 ${guestName}</div>` + originalHTML;
+    }
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}.${today.getMonth()+1}.${today.getDate()}`;
+    const dateSpan = document.getElementById('todayDate');
+    if(dateSpan) dateSpan.innerText = `${dateStr}  生辰吉乐`;
+
+    // ==================== 生成气球 ====================
+    function createBalloons() {
+        const container = document.getElementById('balloonContainer');
+        if (!container) return;
+        const colors = ['#FFB7C5', '#FDD0F2', '#A9D6E5', '#FFD966', '#FBC8B5', '#C5E99B', '#F9AC67', '#E78F8F', '#B3E4C5', '#FFB3BA', '#b0e0ff', '#fbc4ab'];
+        const count = window.innerWidth < 600 ? 12 : 18;
+        for (let i = 0; i < count; i++) {
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            const size = Math.floor(Math.random() * 40 + 30);
+            balloon.style.width = size + 'px';
+            balloon.style.height = (size * 1.1) + 'px';
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            balloon.style.background = `radial-gradient(circle at 30% 30%, ${randomColor}, ${randomColor}cc)`;
+            balloon.style.left = Math.random() * 100 + '%';
+            const duration = Math.random() * 12 + 10;
+            balloon.style.animationDuration = duration + 's';
+            balloon.style.animationDelay = Math.random() * 12 + 's';
+            balloon.style.opacity = 0.3 + Math.random() * 0.3;
+            const highlight = document.createElement('div');
+            highlight.className = 'highlight';
+            balloon.appendChild(highlight);
+            container.appendChild(balloon);
+        }
+    }
+    createBalloons();
+
+    // ==================== 烟花粒子系统 ====================
+    const canvas = document.getElementById('fireworkCanvas');
+    let ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationId = null;
+    let fireworksActive = false;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class FireParticle {
+        constructor(x, y, vx, vy, sizeW, sizeH, color, angle, angleVel) {
+            this.x = x;
+            this.y = y;
+            this.vx = vx;
+            this.vy = vy;
+            this.sizeW = sizeW;
+            this.sizeH = sizeH;
+            this.color = color;
+            this.angle = angle;
+            this.angleVel = angleVel;
+            this.gravity = 0.2;
+            this.life = 1.0;
+            this.decay = 0.02 + Math.random() * 0.02;
+        }
+
+        update() {
+            this.vx *= 0.99;
+            this.vy += this.gravity;
+            this.x += this.vx;
+            this.y += this.vy;
+            this.angle += this.angleVel;
+            this.life -= this.decay;
+            const centerX = canvas.width / 2;
+            const distToCenter = Math.abs(this.x - centerX);
+            const maxDist = canvas.width / 2;
+            let centerAlpha = 1 - (distToCenter / maxDist) * 0.8;
+            centerAlpha = Math.min(1, Math.max(0.2, centerAlpha));
+            this.alpha = this.life * centerAlpha;
+            return this.life > 0 && this.y < canvas.height + 200 && this.x > -200 && this.x < canvas.width + 200;
+        }
+
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.fillStyle = this.color;
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
+            if (Math.abs(this.sizeW - this.sizeH) < 3) {
+                ctx.fillRect(-this.sizeW/2, -this.sizeH/2, this.sizeW, this.sizeH);
+            } else {
+                ctx.fillRect(-this.sizeW/2, -this.sizeH/2, this.sizeW, this.sizeH);
+            }
+            ctx.restore();
+        }
+    }
+
+    function generateFireworks() {
+        if (!fireworksActive) return;
+        const sideCount = 20;
+        const colors = [
+            '#ff595e', '#ffca3a', '#8ac926', '#1982c4', '#d946ef', '#3b82f6',
+            '#f97316', '#f9a8d4', '#6fbf73', '#ffb347', '#e86f6f', '#ff9f4a'
+        ];
+        for (let i = 0; i < sideCount; i++) {
+            const startX = 0;
+            const startY = canvas.height - 40 - Math.random() * 60;
+            const angle = Math.random() * Math.PI / 2.2 + Math.PI / 3.5;
+            const speed = 5 + Math.random() * 9;
+            const vx = Math.cos(angle) * speed;
+            const vy = -Math.sin(angle) * speed - 2;
+            const isLong = Math.random() > 0.4;
+            let sizeW = isLong ? 8 + Math.random() * 12 : 6 + Math.random() * 8;
+            let sizeH = isLong ? 3 + Math.random() * 5 : sizeW;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const angleRot = Math.random() * Math.PI * 2;
+            const angleVel = (Math.random() - 0.5) * 0.2;
+            particles.push(new FireParticle(startX, startY, vx, vy, sizeW, sizeH, color, angleRot, angleVel));
+        }
+        for (let i = 0; i < sideCount; i++) {
+            const startX = canvas.width;
+            const startY = canvas.height - 40 - Math.random() * 60;
+            const angle = Math.PI - (Math.random() * Math.PI / 2.2 + Math.PI / 3.5);
+            const speed = 5 + Math.random() * 9;
+            const vx = Math.cos(angle) * speed;
+            const vy = -Math.sin(angle) * speed - 2;
+            const isLong = Math.random() > 0.4;
+            let sizeW = isLong ? 8 + Math.random() * 12 : 6 + Math.random() * 8;
+            let sizeH = isLong ? 3 + Math.random() * 5 : sizeW;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const angleRot = Math.random() * Math.PI * 2;
+            const angleVel = (Math.random() - 0.5) * 0.2;
+            particles.push(new FireParticle(startX, startY, vx, vy, sizeW, sizeH, color, angleRot, angleVel));
+        }
+    }
+
+    function animateFireworks() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (fireworksActive) generateFireworks();
+        let anyAlive = false;
+        for (let i = 0; i < particles.length; i++) {
+            const alive = particles[i].update();
+            particles[i].draw();
+            if (alive) anyAlive = true;
+            else { particles.splice(i, 1); i--; }
+        }
+        if (anyAlive || fireworksActive) {
+            animationId = requestAnimationFrame(animateFireworks);
+        } else {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+    }
+
+    function startFireworks() {
+        if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+        particles = [];
+        fireworksActive = true;
+        animateFireworks();
+        const btn = document.getElementById('fireworkBtn');
+        if (btn) btn.innerText = '停止烟花';
+    }
+
+    function stopFireworks() {
+        fireworksActive = false;
+        const btn = document.getElementById('fireworkBtn');
+        if (btn) btn.innerText = '绽放烟花祝福';
+    }
+
+    function toggleFireworks() {
+        if (fireworksActive) stopFireworks();
+        else startFireworks();
+    }
+
+    const scrollContainer = document.getElementById('scrollContainer');
+    let activePage = 0;
+    function updateActivePage() {
+        const scrollTop = scrollContainer.scrollTop;
+        const pageHeight = window.innerHeight;
+        const newActive = Math.round(scrollTop / pageHeight);
+        if (newActive !== activePage) {
+            activePage = newActive;
+            if (activePage !== 2 && fireworksActive) stopFireworks();
+        }
+    }
+    scrollContainer.addEventListener('scroll', () => {
+        updateActivePage();
+        handleScroll();
+    });
+    window.addEventListener('resize', () => {
+        updateActivePage();
+        handleScroll();
+    });
+    setTimeout(updateActivePage, 100);
+
+    const fireBtn = document.getElementById('fireworkBtn');
+    if (fireBtn) {
+        fireBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleFireworks();
+            if (navigator.vibrate) navigator.vibrate(60);
+        });
+        fireBtn.addEventListener('touchstart', (e) => { e.preventDefault(); fireBtn.click(); });
+    }
+
+    // ==================== 滚动指示器 ====================
+    const dots = document.querySelectorAll('.dot');
+    const pages = document.querySelectorAll('.page');
+    let currentPageIdx = 0;
+    function updateActiveDot(index) {
+        dots.forEach((dot, i) => { if (i === index) dot.classList.add('active'); else dot.classList.remove('active'); });
+    }
+    function handleScroll() {
+        if (!scrollContainer) return;
+        const scrollTop = scrollContainer.scrollTop;
+        const pageHeight = window.innerHeight;
+        let activeIndex = Math.round(scrollTop / pageHeight);
+        activeIndex = Math.min(pages.length - 1, Math.max(0, activeIndex));
+        if (activeIndex !== currentPageIdx) {
+            currentPageIdx = activeIndex;
+            updateActiveDot(currentPageIdx);
+        }
+    }
+    dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => {
+            scrollContainer.scrollTo({ top: idx * window.innerHeight, behavior: 'smooth' });
+        });
+    });
+    scrollContainer.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    setTimeout(() => { handleScroll(); updateActivePage(); }, 100);
+
+    // ==================== 蜡烛吹灭（同时隐藏提示） ====================
+    const candleDiv = document.getElementById('candleAnim');
+    const candleHint = document.getElementById('candleHint');
+    const permanentArrow = document.getElementById('permanentArrow');
+    const candleTipDiv = document.getElementById('candleTip');
+
+    if (candleDiv && flameElement) {
+        function blowCandle(e) {
+            e.stopPropagation();
+            if (flameElement.style.animation === 'none') return;
+            flameElement.style.animation = 'none';
+            flameElement.style.opacity = '0';
+            if (candleHint) candleHint.style.display = 'none';
+            if (permanentArrow) permanentArrow.classList.add('show');
+            // 熄灭蜡烛后，永久隐藏提示
+            if (candleTipDiv) candleTipDiv.classList.add('hide');
+            if (typeof canvasConfetti === 'function') {
+                canvasConfetti({ particleCount: 70, spread: 45, origin: { y: 0.6 }, colors: ['#ffe68f', '#ffb56b'], startVelocity: 10 });
+            }
+            showModal('许愿成功，愿您一切美好的梦想皆能实现！');
+        }
+        candleDiv.addEventListener('click', blowCandle);
+        candleDiv.addEventListener('touchstart', blowCandle, { passive: false });
+    }
+
+    setTimeout(() => {
+        if (activePage === 2 && !fireworksActive) {
+            startFireworks();
+            setTimeout(() => { if (fireworksActive) stopFireworks(); }, 2000);
+        }
+    }, 500);
+</script>
+</body>
+</html>
